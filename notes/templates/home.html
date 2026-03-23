@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>My Notes</h2>
+{% if notes %}
+    {% for note in notes %}
+
+<div id="note-{{ note.id }}"
+     class="bg-[#FFF8EE] border border-[#E8DED0]
+       rounded-2xl p-5 mb-4
+       hover:shadow-md hover:-translate-y-1
+       transition duration-200">
+    {% if note.image %}
+    <div class="overflow-hidden rounded-2xl mb-4"></div>
+    <img src="{{ note.image.url }}"
+         class="w-full aspect-[4/3] object-cover rounded-2xl shadow-sm">
+    {% endif %}
+    <!-- Title -->
+    <h3 class="text-lg font-semibold mb-2">
+        <a href="{% url 'note_detail' note.id %}"
+           class="hover:text-[#8B5E3C]">
+            {{ note.title }}
+        </a>
+    </h3>
+
+    <!-- Buttons -->
+    <div class="flex gap-3 mt-3">
+
+        <a href="{% url 'edit_note' note.id %}"
+           class="px-3 py-1 rounded-lg bg-[#8B5E3C] text-white text-sm">
+            Edit
+        </a>
+
+        <button
+            hx-post="{% url 'delete_note' note.id %}"
+            hx-target="#note-{{ note.id }}"
+            hx-swap="outerHTML"
+             class="px-3 py-1 rounded-lg bg-[#8B5E3C]
+       text-white text-sm
+       hover:bg-[#734a2f] transition">
+            Delete
+        </button>
+
+        <button
+        hx-get="{% url 'summarize_note' note.id %}"
+        hx-target="#summary-{{ note.id }}"
+        hx-swap="innerHTML"
+        class="px-3 py-1 rounded-lg border border-[#8B5E3C] text-[#8B5E3C] text-sm hover:bg-[#8B5E3C] hover:text-white transition">
+
+        Summarize ✨
+
+        </button>
+
+        <div id="summary-{{ note.id }}"></div>
+        <a href="{% url 'generate_quiz' note.id %}"
+           class="px-3 py-1 rounded-lg border border-[#8B5E3C] text-[#8B5E3C] text-sm hover:bg-[#8B5E3C] hover:text-white transition">
+            Generate Quiz
+        </a>
+    </div>
+
+</div>
+
+{% endfor %}
+{% else %}
+<div class="bg-[#FFF8EE] border border-[#E8DED0]
+            rounded-2xl p-6 text-center text-sm">
+    No notes yet 🌿
+</div>
+{% endif %}
+{% endblock %}

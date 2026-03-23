@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="bg-[#FFF8EE] border border-[#E8DED0]
+            rounded-2xl p-6 max-w-md mx-auto">
+
+    <h2 class="text-xl font-semibold mb-4">Sign Up</h2>
+
+    <form method="POST" class="space-y-4">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button class="bg-[#8B5E3C] text-white px-4 py-2 rounded-lg">
+            Create Account
+        </button>
+    </form>
+
+</div>
+
+{% endblock %}

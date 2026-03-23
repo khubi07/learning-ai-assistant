@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="bg-[#FFF8EE] rounded-2xl shadow-sm p-6">
+
+    <h2 class="text-xl font-semibold mb-4">Add Note</h2>
+
+    <form method="POST" enctype="multipart/form-data" class="space-y-4">
+        {% csrf_token %}
+        <p>{{ form.title.label }} {{ form.title }}</p>
+        <p>{{ form.content.label }} {{ form.content }}</p>
+        <p>{{ form.image.label }} {{ form.image }}</p>
+
+        <button class="bg-[#8B5E3C] text-white px-4 py-2 rounded-lg">
+            Save
+        </button>
+    </form>
+
+</div>
+
+{% endblock %}

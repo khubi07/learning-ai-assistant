@@ -1,0 +1,73 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI STUDY ASSISTANT</title>
+    <link href="{% static 'css/output.css' %}" rel="stylesheet">
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+
+</head>
+
+<body class="bg-[#F5F1E8] text-[#3E2C23] min-h-screen">
+   
+    <!-- Main container -->
+    <div class="max-w-5xl mx-auto mt-8 px-4">
+
+        <nav class="bg-[#FFF8EE] border border-[#E8DED0] rounded-2xl px-6 py-4">
+
+            <div class="flex items-center justify-between">
+
+                <!-- Left side -->
+                <h1 class="text-xl font-bold text-[#3E2C23] whitespace-nowrap">
+                    AI Study Assistant
+                </h1>
+
+                <!-- Right side -->
+                <div class="flex gap-4 text-sm">
+                    <a href="{% url 'home' %}" class="hover:text-[#8B5E3C]">
+                        Home
+                    </a>
+                    <a href="{% url 'add_note' %}" class="hover:text-[#8B5E3C]">
+                        Add Note
+                    </a>
+                    {% if user.is_authenticated %}
+
+                    <form method="POST" action="{% url 'logout' %}" class="inline">
+                        {% csrf_token %}
+                        <button type="submit" class="hover:text-[#8B5E3C]">
+                            Logout
+                        </button>
+                    </form>
+
+                    {% else %}
+
+                    <a href="{% url 'login' %}" class="hover:text-[#8B5E3C]">
+                        Login
+                    </a>
+
+                    {% endif %}
+                </div>
+
+            </div>
+
+        </nav>
+
+
+        <!-- Page content -->
+        <div class="mt-6">
+            {% block content %}
+            {% endblock %}
+        </div>
+
+    </div>
+
+</body>
+<script>
+    document.body.addEventListener('htmx:configRequest', (event) => {
+        event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
+    });
+</script>
+
+</html>
